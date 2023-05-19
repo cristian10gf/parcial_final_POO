@@ -40,8 +40,9 @@ class Person(ABC):
 
 
 class Soldier(Person):
-    def __init__(self, name: str,age: int, planet: 'Planet') -> None:
-        super().__init__(name, planet)
+    def __init__(self, name: str,age: int, planet: 'Planet' or dict) -> None:
+        planeta = Planet(planet['planet_name'],planet['planet_type'])
+        super().__init__(name, planeta)
         self.__age = age
 
 

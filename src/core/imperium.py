@@ -2,7 +2,7 @@ from src.person.primarch import Primarch
 from src.person.person import Person, Planet
 from src.divisiones.divisions import AdeptusAstartes
 #from src.core.emperor import  SingletonError
-from src.divisiones.divisions import Segmentum
+from src.divisiones.divisions import Segmentum, AstraMilitarum
 from src.divisiones.divisions import Administratum, Regiment, Chapter
 from src.enumeration.enumeration import Status
 
@@ -26,7 +26,7 @@ class Imperium:
         self.__primarchs: list['Primarch'] = []
         self.__administratum = Administratum()
         self.__adeptus_astarte = AdeptusAstartes()
-        self.__regiments: list['Regiment'] = []
+        self.__astra_militarum: 'AstraMilitarum' = AstraMilitarum()
         print(f'The Emperor created {self.__name} at planet {self.planet.nombre}')
         print(f'Added Segmentum {self.__segmentums[0].name} to the Imperium')
 
@@ -65,7 +65,6 @@ class Imperium:
     def get_chapter(self, index: int) -> 'Chapter':
         return self.__adeptus_astarte.get_chapter(index)
     
-
     @property
     def planet(self) -> 'Planet':
         return self.__planet
@@ -94,8 +93,6 @@ class Imperium:
                 print('RuntimeError: There can only be 20 Primarchs')
             else:
                 self.__primarchs.append(Primarch(primarch_dates[0], planeta, primarch_dates[1], Status.UNKNOWN, self))
-
-            
 
     @property
     def primarchs(self) -> list['Primarch']:
@@ -133,6 +130,22 @@ class Imperium:
             self.__administratum.planet_registry.pop(-1)
             self.__administratum.planet_registry.append(planeta)
 
+    def add_regiment(self, name: str, planet: str) -> None:
+        info_planet = {
+            'planet_name': planet,
+            'planet_type': 'planet'
+        }
+        planeta = self.crear_planeta(info_planet)
+        self.__astra_militarum.add_regiment(Regiment(name, planeta))
 
-            
+    def get_regiment(self, index: int) -> 'Regiment':
+        return self.__astra_militarum.regiment_index(index)
+
+    def bureaucrat_max_registry(self) -> list['Bureaucrat', int]:
+        registry_buro = {}
+        for i in range(len(self.__administratum.bureaucrats)):
+            registry_buro[self.__administratum.bureaucrats[i]] = self.__administratum.planet_registry[i]
+    
+        return [max(registry_buro, key=registry_buro.get), max(registry_buro.values())]
+         
 

@@ -9,8 +9,6 @@ class Planet:
         self.__type_ = type_
         self.__chapter = chapter
         self.__regiments = regiments if regiments else []
-        for regiment in self.__regiments:
-            regiment.add_planet(self)
 
     @property
     def nombre(self) -> str:
@@ -18,6 +16,9 @@ class Planet:
 
     def add_chapter(self, chapter: 'Chapter') -> None:
         self.__chapter = chapter
+
+    def add_regiment(self,regiment: 'Regiment') -> None:
+        self.__regiments.append(regiment)
 
     @property
     def chapter(self) -> 'Chapter':

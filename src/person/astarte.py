@@ -1,8 +1,8 @@
-from src.person.person import Person
+from src.person.person import Person, Planet
 
 
 class Astarte(Person):
-    def __init__(self, name: str, planet: 'Planet' or dict, founding: int) -> None:
+    def __init__(self, name: str, founding: int, planet: 'Planet' or dict) -> None:
         planet = Planet(planet['planet_name'],planet['planet_type'])
         super().__init__(name, planet)
         self.__founding = founding

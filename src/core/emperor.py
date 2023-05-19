@@ -4,6 +4,7 @@ from src.enumeration.enumeration import Status
 from src.person.primarch import Primarch
 from src.person.person import Person
 from src.divisiones.divisions import Segmentum
+from src.person.astarte import Astarte
 
 
 class SingletonError(Exception):

@@ -31,6 +31,12 @@ class AstraMilitarum:
     def __init__(self) -> None:
         self.__regiments: list['Regiment'] = []
 
+    def add_regiment(self, regiment: 'Regiment') -> None:
+        self.__regiments.append(regiment)
+    
+    def regiment_index(self, index: int) -> 'Regiment':
+        return self.__regiments[index]
+
 
 class Regiment:
     def __init__(self, name: str, planet: Planet) -> None:
@@ -38,17 +44,19 @@ class Regiment:
         self.__planet = planet
 
         self.__soldiers: list['Soldier'] = []
+        planet.add_regiment(self)
+        print(f'Created Regiment {self.name} of Astra Militarum')
 
     @property
-    def get_name(self) -> str:
+    def name(self) -> str:
         return self.__name
 
     @property
-    def get_planet(self) -> Planet:
+    def planet(self) -> Planet:
         return self.__planet
 
     @property
-    def get_soldiers(self) -> list['Soldier']:
+    def soldiers(self) -> list['Soldier']:
         return self.__soldiers
 
     def add_soldier(self, soldier: 'Soldier') -> None:
@@ -69,7 +77,14 @@ class Administratum:
         return self.__planet_registry
 
     def add_bureaucrat(self, bureaucrat: 'Bureaucrat') -> None:
-        self.planet_registry.append(0)
+        new_registry  = []
+        for registry in self.__planet_registry:
+            if isinstance(registry, int):
+                new_registry.append(registry)
+
+        self.__planet_registry = new_registry
+
+        self.__planet_registry.append(0)
         self.__bureaucrats.append(bureaucrat)
         print(f'{bureaucrat.name} {bureaucrat.id_string} started to work at Imperium')
 
@@ -92,27 +107,35 @@ class Chapter:
         planet.add_chapter(self)
 
     @property
-    def get_name(self) -> str:
+    def name(self) -> str:
         return self.__name
 
     @property
-    def get_primarch(self) -> Primarch:
+    def primarch(self) -> Primarch:
         return self.__primarch
 
     @property
-    def get_planet(self) -> Planet:
+    def planet(self) -> Planet:
         return self.__planet
 
     @property
-    def get_astartes(self) -> list['Astarte']:
+    def astartes(self) -> list['Astarte']:
         return self.__astartes
 
     @property
-    def get_successor_chapters(self) -> list['Chapter']:
+    def successor_chapters(self) -> list['Chapter']:
         return self.__successor_chapters
     
     def add_astarte(self, astarte: 'Astarte') -> None:
-        self.__astartes.append(astarte)
+        if len(self.__astartes) == 1000:
+            print(f'{self.name} is full')
+            print(f'RuntimeError: There can only be 1000 Astartes per Chapter')
+        else:
+            self.__astartes.append(astarte)
+
+    def add_successor_chapter(self, chapter: 'Chapter')-> None:
+        self.__successor_chapters.append(chapter)
+        print(f'Added Successor Chapter {chapter.name} to Chapter {self.name}')
 
 
 class AdeptusAstartes:
@@ -121,6 +144,7 @@ class AdeptusAstartes:
 
     def add_chapter(self, chapter: Chapter) -> None:
         self.__chapters.append(chapter)
+        print(f'Created Chapter {chapter.name} of Adeptus Astartes')
 
     def get_chapter(self, index: int) -> Chapter:
         return self.__chapters[index]
