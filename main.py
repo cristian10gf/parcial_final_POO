@@ -3,8 +3,6 @@ from src.enumeration.enumeration import *
 from src.person.person import *
 
 
-
-
 def main() -> None:
     try:
         emperor = Emperor()
@@ -19,8 +17,7 @@ def main() -> None:
         'segmentum_location': 'Center'
     }
 
-    emperor.create_imperium('The Imperium of Mankind',
-                            terra_info)  # If the planet or segmentum is not created it must be created
+    emperor.create_imperium('The Imperium of Mankind', terra_info)  # If the planet or segmentum is not created it must be created
 
     planets_info = {
         'caliban': {
@@ -180,15 +177,13 @@ def main() -> None:
 
     # The id_string of a person must be a 6 character hexadecimal string generated sequentially
     # The name of a person must be the name sent by parameter plus the id_string generated
-    emperor.create_primarch('Lion El Jonson', 'The Lion',
-                            planets_info['caliban'])  # If the planet or segmentum is not created it must be created.
+    emperor.create_primarch('Lion El Jonson', 'The Lion', planets_info['caliban'])  # If the planet or segmentum is not created it must be created.
     emperor.create_primarch(None)  # If there is no info, a None must be added to Primarchs list.
     emperor.create_primarch('Fulgrim', 'The Phoenician', planets_info['chemos'])
     emperor.create_primarch('Perturabo', 'Lord of Iron', planets_info['olympia'])
     emperor.create_primarch('Jaghatai Khan', 'The Warhawk', planets_info['chogoris'])
     emperor.create_primarch('Leman Russ', 'Wolf King', planets_info['fenris'])
-    emperor.create_primarch('Rogal Dorn', 'Praetorian of Terra',
-                            planets_info['terra'])  # The planet is already created, so no message is shown
+    emperor.create_primarch('Rogal Dorn', 'Praetorian of Terra', planets_info['terra'])  # The planet is already created, so no message is shown
     emperor.create_primarch('Konrad Curze', 'Night Haunter', planets_info['nostramo'])
     emperor.create_primarch('Sanguinius', 'Great Angel', planets_info['baal'])
     emperor.create_primarch('Ferrus Manus', 'The Gorgon', planets_info['medusa'])
@@ -202,8 +197,7 @@ def main() -> None:
     emperor.create_primarch('Vulkan', 'The Promethean Flame', planets_info['nocturne'])
     emperor.create_primarch('Corvus Corax', 'Raven Lord', planets_info['deliverance'])
     emperor.create_primarch('Alpharius Omegon', 'Last Primarch', planets_info['cadia'])
-    emperor.create_primarch('Belisarius Cawl', 'The Archimagus',
-                            planets_info['mars'])  # The Primarch can't be added, but planet is added
+    emperor.create_primarch('Belisarius Cawl', 'The Archimagus', planets_info['mars'])  # The Primarch can't be added, but planet is added
 
     imperium.primarchs[2].betray()
     imperium.primarchs[3].betray()
@@ -227,8 +221,7 @@ def main() -> None:
     imperium.primarchs[18].change_status(Status.UNKNOWN)
     imperium.primarchs[19].change_status(Status.UNKNOWN)
 
-    imperium.add_bureaucrat(Bureaucrat('Imperial Bureaucrat', 'Departmento Munitorum', planets_info[
-        'terra']))  # A new registry must be added at Administratum with value 0
+    imperium.add_bureaucrat(Bureaucrat('Imperial Bureaucrat', 'Departmento Munitorum', planets_info['terra']))  # A new registry must be added at Administratum with value 0
     imperium.register_planet(imperium.get_bureaucrat(0), planets_info['armageddon'])  # The registry must increase in 1
     imperium.register_planet(imperium.get_bureaucrat(0), planets_info['armageddon'])  # The registry mustn't increase
     imperium.register_planet(imperium.get_bureaucrat(0), planets_info['catachan'])
@@ -255,8 +248,7 @@ def main() -> None:
     imperium.get_chapter(10).add_successor_chapter(imperium.get_chapter(-1))
 
     for i in range(1001):
-        imperium.get_chapter(10).add_astarte(Astarte('Space Marine', (i % 10) + 1, planets_info[
-            'macragge']))  # Must show an error message on 1001 astarte
+        imperium.get_chapter(10).add_astarte(Astarte('Space Marine', (i % 10) + 1, planets_info['macragge']))  # Must show an error message on 1001 astarte
 
     imperium.add_bureaucrat(Bureaucrat('Imperial Bureaucrat', 'Officio Medicae', planets_info['terra']))
     imperium.register_planet(imperium.get_bureaucrat(1), planets_info['krieg'])
