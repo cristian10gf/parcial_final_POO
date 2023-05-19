@@ -18,3 +18,15 @@ class Primarch(Person):
         self.__loyalty = False
         print(f'Primarch {self.name} betrays the Emperor')
 
+    @property
+    def alias(self) -> str:
+        return self.__alias
+    
+    @property
+    def status(self) -> 'Status':
+        return self.__status
+    
+    @property
+    def loyalty(self) -> bool:
+        return self.__loyalty
+

@@ -4,11 +4,11 @@ from src.divisiones.divisions import AdeptusAstartes
 #from src.core.emperor import  SingletonError
 from src.divisiones.divisions import Segmentum, AstraMilitarum
 from src.divisiones.divisions import Administratum, Regiment, Chapter
-from src.enumeration.enumeration import Status
+from src.enumeration.enumeration import Status, PlanetType
 
 
 class RuntimeError(Exception):
-    print('There can only be 20 Primarchs')
+    pass
 
 
 class Imperium:
@@ -92,7 +92,7 @@ class Imperium:
             if len(self.__primarchs) == 20:
                 print('RuntimeError: There can only be 20 Primarchs')
             else:
-                self.__primarchs.append(Primarch(primarch_dates[0], planeta, primarch_dates[1], Status.UNKNOWN, self))
+                self.__primarchs.append(Primarch(primarch_dates[0], planeta, primarch_dates[1], Status.ALIVE, self))
 
     @property
     def primarchs(self) -> list['Primarch']:
@@ -148,4 +148,77 @@ class Imperium:
     
         return [max(registry_buro, key=registry_buro.get), max(registry_buro.values())]
          
+    def planet_type_quantity(self) -> None:
+        planets = []
+        
+        for segmento in self.__segmentums:
+            planets.extend(segmento.planets)
+        for planeta in planets:
+            if planeta.type_ == PlanetType.HIVE :
+                planets.remove(planeta)
+                break
+        planet_type = {}
+        for planet in planets:
+            if planet.type_ in planet_type:
+                planet_type[planet.type_] += 1
+            else:
+                planet_type[planet.type_] = 1
+        planet_type2 = dict(sorted(planet_type.items(), key=lambda x: x[0].value))
 
+        print('---------- Planet Type ----------')
+        for llave, valor in planet_type2.items():
+            print(f'- {llave.value} Planet Quantity = {valor}')
+ 
+    def show_primarchs_summary(self) -> None:
+        def generar_numero_romano(numero):
+            valores = {
+                1000: 'M',
+                900: 'CM',
+                500: 'D',
+                400: 'CD',
+                100: 'C',
+                90: 'XC',
+                50: 'L',
+                40: 'XL',
+                10: 'X',
+                9: 'IX',
+                5: 'V',
+                4: 'IV',
+                1: 'I'
+            }
+            for valor, simbolo in valores.items():
+                while numero >= valor:
+                    yield simbolo
+                    numero -= valor
+        print('\n---------- Primarchs Summary ----------')
+        posicion = 0
+        for primarch in self.__primarchs:
+            posicion += 1
+            posicion_romano = ''.join(generar_numero_romano(posicion))
+            if primarch is None:
+                print(f'- Primarch '+ posicion_romano)
+                print(f'  - Purged from Imperial Registry')
+                print('\n')
+            else:
+                print(f'- Primarch '+ posicion_romano)
+                print(f'  - ID: {primarch.id_string}')
+                print(f'  - Name: {primarch.name}')
+                print(f'  - Alias: {primarch.alias}')
+                print(f'  - Loyal: {primarch.loyalty}')
+                print(f'  - Status: {primarch.status.value}')
+                print(f'  - Planet: {primarch.planet.nombre}')
+                print(f'    - Astra Militarum Regiments Quantity: {len(primarch.planet.regiments)}')
+                soldiers = 0
+                for regiment in primarch.planet.regiments:
+                    soldiers += len(regiment.soldiers)
+                print(f'    - Astra Militarum Total Soldiers: {soldiers}')
+                for chapter in self.__adeptus_astarte.chapters:
+                    if chapter.primarch == primarch:
+                        print(f'    - Adeptus Astates Chapter: {chapter.name}')
+                        break
+                print(f'      - Successor Chapters:')
+                for chapter in self.__adeptus_astarte.chapters:
+                    for successor in chapter.successor_chapters:
+                        if successor.primarch == primarch:
+                            print(f'        - {successor.name}')
+                print('\n')

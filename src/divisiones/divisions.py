@@ -36,6 +36,10 @@ class AstraMilitarum:
     
     def regiment_index(self, index: int) -> 'Regiment':
         return self.__regiments[index]
+    
+    @property
+    def regiments(self) -> list['Regiment']:
+        return self.__regiments
 
 
 class Regiment:
@@ -148,4 +152,8 @@ class AdeptusAstartes:
 
     def get_chapter(self, index: int) -> Chapter:
         return self.__chapters[index]
+    
+    @property
+    def chapters(self) -> list['Chapter']:
+        return self.__chapters
 

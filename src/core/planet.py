@@ -27,5 +27,9 @@ class Planet:
     @property
     def regiments(self) -> list['Regiment']:
         return self.__regiments
+    
+    @property
+    def type_(self) -> 'PlanetType':
+        return self.__type_
 
 

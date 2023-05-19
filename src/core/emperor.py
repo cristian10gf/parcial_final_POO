@@ -8,7 +8,7 @@ from src.person.astarte import Astarte
 
 
 class SingletonError(Exception):
-    print('There can only be one Emperor of Mankind')
+    pass
 
 
 class Singleton:

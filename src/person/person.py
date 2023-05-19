@@ -3,7 +3,7 @@ from src.core.planet import Planet
 
 def generar_siguiente_hexadecimal():
     if 'ultimo_hex' not in generar_siguiente_hexadecimal.__dict__:
-        generar_siguiente_hexadecimal.ultimo_hex = 1
+        generar_siguiente_hexadecimal.ultimo_hex = 0
     
     # Incrementar el último número generado
     generar_siguiente_hexadecimal.ultimo_hex += 1
@@ -48,5 +48,6 @@ class Soldier(Person):
 
 class Bureaucrat(Person):
     def __init__(self, name: str, planet: 'Planet', department: str) -> None:
+        generar_siguiente_hexadecimal()
         super().__init__(name, planet)
         self.__department = department
